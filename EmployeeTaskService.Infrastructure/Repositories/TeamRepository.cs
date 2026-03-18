@@ -51,5 +51,16 @@ namespace EmployeeTaskService.Infrastructure.Repositories
                 .AsNoTracking()
                 .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
         }
+        public async Task<bool> ExistsByNameAsync(string name, Guid excludeId, CancellationToken cancellationToken)
+        {
+            return await _context.Teams
+                .AnyAsync(x => x.Name == name && x.Id != excludeId, cancellationToken);
+        }
+
+        public Task UpdateAsync(Team team, CancellationToken cancellationToken)
+        {
+            _context.Teams.Update(team);
+            return Task.CompletedTask;
+        }
     }
 }

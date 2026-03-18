@@ -1,4 +1,5 @@
 ﻿using EmployeeTaskService.Application.Commands.Teams.CreateTeam;
+using EmployeeTaskService.Application.Commands.Teams.UpdateTeam;
 using EmployeeTaskService.Application.Queries.Teams.GetTeamById;
 using EmployeeTaskService.Application.Queries.Teams.GetTeams;
 using MediatR;
@@ -40,6 +41,19 @@ namespace EmployeeTaskService.Api.Controllers
                 return NotFound();
 
             return Ok(result);
+        }
+        [HttpPut("{id:guid}")]
+        public async Task<IActionResult> Update(Guid id, [FromBody] UpdateTeamCommand command)
+        {
+            if (id != command.Id)
+                return BadRequest("El id de la ruta no coincide con el id del body.");
+
+            var updated = await _mediator.Send(command);
+
+            if (!updated)
+                return NotFound();
+
+            return NoContent();
         }
 
     }
