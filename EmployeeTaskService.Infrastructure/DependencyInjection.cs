@@ -9,7 +9,7 @@ namespace EmployeeTaskService.Infrastructure
         public static IServiceCollection AddInfrastructure(this IServiceCollection services)
         {
             services.AddScoped<ITeamRepository, TeamRepository>();
-
+            services.AddScoped<IEmployeeRepository, EmployeeRepository>();
             return services;
         }
     }
